@@ -1585,7 +1585,7 @@ def sync_Book(DIR_BASE, DIR_PAGES, type_Device):
         sync(book_root)
 
     else:
-        url = "https://github.com/PepikVaio/iPad_Test/archive/refs/heads/main.zip"
+        url = "https://github.com/PepikVaio/macOS_Bindery/archive/refs/heads/main.zip"
 
         with tempfile.TemporaryDirectory() as temp_dir:
 
