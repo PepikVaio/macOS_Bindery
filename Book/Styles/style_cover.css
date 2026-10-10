@@ -22,19 +22,19 @@ header {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	margin-top: 27px;
+	margin-top: 1em;
 }
 
 header h1,
 .header_H1 {
-	font-size: 75px;
-	margin-bottom: 0px;
+	font-size: 3em;
+	margin-bottom: 0;
 }
 
 header h2,
 .header_H2 {
 	color: #333333;
-	font-size: 40px;
+	font-size: 1.5em;
 	font-family: "paragraph", "Ubuntu-Regular";
 }
 
@@ -50,7 +50,7 @@ header h2,
 footer p,
 .footer_P {
 	color: #333333;
-	font-size: 50px;
+	font-size: 1.5em;
 	margin-top: auto;
-	margin-bottom: -17px;
+	margin-bottom: -1.1em;
 }

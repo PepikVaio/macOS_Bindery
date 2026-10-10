@@ -28,7 +28,7 @@ Počet znaků `#` na začátku řádku určuje úroveň nadpisu. Za `#` vždy na
     Druhý odstavec.
 
 
-Chcete-li zalomit řádek **bez** založení nového odstavce, ukončete předchozí řádek **dvěma mezerami**.
+Chcete-li zalomit řádek **bez** založení nového odstavce, ukončete předchozí řádek **dvěma mezerami** nebo použijte `<br>`
 
     První řádek··
     Druhý řádek
@@ -175,7 +175,7 @@ Takto lze vypsat například: `\`, `*`, `_`, `#`, `[`, `]`, `` ` ``, `>`
 
 ### 12. Tip
 
-Pro studijní účely můžete také využít tohoto průvodce, který najdete na stránce projektu [Github](https://github.com/PepikVaio/iPad_Test)
+Pro studijní účely můžete také využít tohoto průvodce, který najdete na stránce projektu [Github](https://github.com/PepikVaio/macOS_Bindery)
 
 ---
 

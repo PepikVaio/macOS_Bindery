@@ -1,5 +1,8 @@
 # Format
-1404x1872px
+A4
+
+# Base font size
+15
 
 # Type
 document

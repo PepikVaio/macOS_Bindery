@@ -1,31 +1,30 @@
+
 /**
- *      ___          _                _   _   _              
+ *      ___          _                _   _   _
  *     | _ ) ___  __| |_  _   ___ ___| |_| |_(_)_ _  __ _ ___
  *     | _ \/ _ \/ _` | || | (_-</ -_)  _|  _| | ' \/ _` (_-<
  *     |___/\___/\__,_|\_, | /__/\___|\__|\__|_|_||_\__, /__/
- *                     |__/                         |___/    
+ *                     |__/                         |___/
  */
 
 @page {
-    size: {{PAGE_WIDTH}}px {{PAGE_HEIGHT}}px;
-
+    size: {{PAGE_WIDTH}} {{PAGE_HEIGHT}};
     margin: 0;
     padding: 0;
 }
 
 body {
-    width: {{PAGE_WIDTH}}px;
-    height: {{PAGE_HEIGHT}}px;
-
+    width: {{PAGE_WIDTH}};
+    height: {{PAGE_HEIGHT}};
+    font-size: {{BASE_FONT_SIZE}};
     margin: 0;
-    padding: 50px;
-
+    padding: 3em;
     box-sizing: border-box;
 }
 
 body .background {
-    width: {{PAGE_WIDTH}}px;
-    height: {{PAGE_HEIGHT}}px;
+    width: {{PAGE_WIDTH}};
+    height: {{PAGE_HEIGHT}};
     position: fixed;
     top: 0;
     left: 0;
@@ -36,56 +35,56 @@ body .background {
 }
 
 h1, h2, h3, h4, h5, h6 {
-    font-family: "header", "Ubuntu-Bold"
+    font-family: "header", "Ubuntu-Bold";
 }
 
 p, ol, ul, pre {
-    font-family: "paragraph", "Ubuntu-Regular"
+    font-family: "paragraph", "Ubuntu-Regular";
 }
 
 em, blockquote p, .quote {
-    font-family: "italic", "Ubuntu-Italic"
+    font-family: "italic", "Ubuntu-Italic";
 }
 
 strong {
-    font-family: "paragraph_Bold", "Ubuntu-Medium"
+    font-family: "paragraph_Bold", "Ubuntu-Medium";
 }
 
 strong em {
-    font-family: "italic_Bold", "Ubuntu-MediumItalic"
+    font-family: "italic_Bold", "Ubuntu-MediumItalic";
 }
 
-h1 {font-size: 60px}
-h2 {font-size: 55px}
-h3 {font-size: 50px}
-h4 {font-size: 45px}
-h5 {font-size: 40px}
-h6 {font-size: 35px}
+h1 { font-size: 2.6em; }
+h2 { font-size: 1.8em; }
+h3 { font-size: 1.4em; }
+h4 { font-size: 1.2em; }
+h5 { font-size: 1.1em; }
+h6 { font-size: 1.0em; }
 
 h1, h2, h3, h4, h5, h6, p {
     color: black;
 }
 
 p, ol, ul, blockquote {
-    font-size: 32px;
+    font-size: 1em;
     line-height: 1.5;
 }
 
 pre {
-    font-size: 25px;
-    line-height: 1.2;
+    font-size: 1em;
+    line-height: 1.23;
     display: table;
     max-width: 100%;
-    margin-left: 40px;
-    padding: 15px 40px;
-    border-radius: 20px;
+    margin-left: 1.7em;
+    padding: 0.8em 1.8em;
+    border-radius: 1em;
     background-color: #eeeeee;
 }
 
 p code {
     max-width: 100%;
-    padding: 5px 10px;
-    border-radius: 10px;
+    padding: 0.15em 0.5em;
+    border-radius: 0.5em;
     background-color: #eeeeee;
 }
 
@@ -94,39 +93,37 @@ blockquote, code {
 }
 
 blockquote {
-    border-left: solid 5px gray;
-    margin-left: 40px;
-    margin-right: 40px;
-    padding-left: 20px;
+    border-left: solid 0.2em gray;
+    margin-left: 1.7em;
+    margin-right: 1.7em;
+    padding-left: 0.65em;
 }
 
 del {
     text-decoration: line-through;
 }
 
-
-
 table {
-	font-size: 32px;
-	font-family: "paragraph", "Ubuntu-Regular";
-	border-collapse: collapse;
-	margin: 20px 0;
+    font-size: 1em;
+    font-family: "paragraph", "Ubuntu-Regular";
+    border-collapse: collapse;
+    margin: 1.5em 0;
 }
 
 table th {
-	font-size: 35px;
-	font-family: "paragraph_Bold", "Ubuntu-Medium";
-	padding: 12px 15px;
-	text-align: left;
-	background-color: #eeeeee;
-	border-bottom: 3px solid #555555;
+    font-size: 1.1em;
+    font-family: "paragraph_Bold", "Ubuntu-Medium";
+    padding: 0.8em 1em;
+    text-align: left;
+    background-color: #eeeeee;
+    border-bottom: 0.2em solid #555555;
 }
 
 table td {
-	padding: 10px 15px;
-	border-bottom: 1px solid #cccccc;
+    padding: 0.6em 1em;
+    border-bottom: 0.1em solid #cccccc;
 }
 
 table tr:last-child td {
-	border-bottom: 2px solid #888888;
+    border-bottom: 0.2em solid #888888;
 }

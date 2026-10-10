@@ -111,12 +111,34 @@ def create_Css(DIR_PAGES, DIR_STYLES, DIR_TEMP):
 
     settings = load_Settings(DIR_BASE)
 
+    width_match = re.fullmatch(r"(\d+(?:\.\d+)?)(mm|px)", str(page_Width), re.IGNORECASE)
+    height_match = re.fullmatch(r"(\d+(?:\.\d+)?)(mm|px)", str(page_Height), re.IGNORECASE)
+
+    if not width_match or not height_match:
+        raise ValueError(f"Neplatné rozměry stránky: {page_Width} × {page_Height}")
+
+    page_Width_px = float(width_match.group(1))
+    page_Height_px = float(height_match.group(1))
+
+    if width_match.group(2).lower() == "mm":
+        page_Width_px *= 96 / 25.4
+
+    if height_match.group(2).lower() == "mm":
+        page_Height_px *= 96 / 25.4
+
+    a4_Width_px = 210 * 96 / 25.4
+    a4_Height_px = 297 * 96 / 25.4
+
+    page_Scale = (page_Width_px * page_Height_px / (a4_Width_px * a4_Height_px)) ** 0.5
+    base_Font_Size = float(settings["base_font_size"]) * page_Scale
+
     replacements = {
         "PAGE_WIDTH": page_Width,
         "PAGE_HEIGHT": page_Height,
         "FILE_COVER": os.path.basename(file_Cover),
         "FILE_BACKGROUND": os.path.basename(file_Background) if file_Background else "",
-        "IMAGE_SIZE": settings["image_size"]
+        "IMAGE_SIZE": settings["image_size"],
+        "BASE_FONT_SIZE": f"{base_Font_Size:.4f}" + "px"
     }
 
     files = [
@@ -254,6 +276,7 @@ def create_Html(DIR_PAGES, DIR_TEMP, DIR_STYLES, DIR_TEMPLATES):
         text_Markdown = "\n".join(new_lines)
 
         content = markdown.markdown(text_Markdown, extensions=["extra", "tables", "fenced_code", "sane_lists"])
+        content = re.sub(r'<br\s*/?>', '<br />', content, flags=re.IGNORECASE)
         content = content.replace("<!-- LIST_BREAK -->", "")
         content = content.replace("<!-- QUOTE_BREAK -->", "")
         content = re.sub(r'(?<![=\w])"([^"\n]+)"', r'<span class="quote">"\1"</span>', content)
@@ -284,7 +307,7 @@ def create_Html(DIR_PAGES, DIR_TEMP, DIR_STYLES, DIR_TEMPLATES):
                                          else line for line in code_content.splitlines())
 
             code_content = code_content.rstrip("\n")
-            code_html = (f'</p><pre><code>{html.escape(code_content)}</code></pre><p>')
+            code_html = f'<pre><code>{html.escape(code_content)}</code></pre>'
             content = content.replace(f'<p>@@CODE_BLOCK_{index}@@</p>', code_html)
             content = content.replace(f'@@CODE_BLOCK_{index}@@', code_html)
 
@@ -1053,8 +1076,8 @@ def load_Data(DIR_BASE, DIR_TEMP):
         if not match:
             raise ValueError(f"Neplatný formát knihy: {format_Book}")
 
-        page_Width = match.group(1)
-        page_Height = match.group(2)
+        page_Width = match.group(1) + "px"
+        page_Height = match.group(2) + "px"
 
     DIR_IMAGES = os.path.join(DIR_TEMP, "Images")
 
@@ -1254,9 +1277,10 @@ def load_Settings(DIR_BASE):
 
     if not os.path.exists(settings_file):
         return {
-            "format": "",
-            "type": "",
-            "image_size": ""
+            "format": "A4",
+            "base_font_size": "15",
+            "type": "book",
+            "image_size": "cover"
         }
 
     text_Markdown = open(settings_file, "r", encoding="utf-8").read()
@@ -1283,9 +1307,10 @@ def load_Settings(DIR_BASE):
         sections[current_section] = "\n".join(current_lines).strip()
 
     return {
-        "format": sections.get("format", ""),
-        "type": sections.get("type", ""),
-        "image_size": sections.get("image size", "")
+        "format": sections.get("format", "A4"),
+        "base_font_size": sections.get("base font size", "15"),
+        "type": sections.get("type", "book"),
+        "image_size": sections.get("image size", "cover")
     }
 
 
@@ -1550,6 +1575,9 @@ def sync_Book(DIR_BASE, DIR_PAGES, type_Device):
             os.makedirs(user_root, exist_ok=True)
 
             for file in files:
+                if relative_root == "." and file.lower() in ["settings.md", "description.md"]:
+                    continue
+
                 if relative_root == "Pages":
 
                     name = os.path.splitext(file)[0].lower()
@@ -1585,7 +1613,7 @@ def sync_Book(DIR_BASE, DIR_PAGES, type_Device):
         sync(book_root)
 
     else:
-        url = "https://github.com/PepikVaio/macOS_Bindery/archive/refs/heads/main.zip"
+        url = "https://github.com/PepikVaio/iPad_Test/archive/refs/heads/main.zip"
 
         with tempfile.TemporaryDirectory() as temp_dir:
 
@@ -1629,7 +1657,7 @@ if __name__ == "__main__":
     FILE_ERROR = os.path.join(DIR_BASE, "Bindery_Error.txt")
 
     if type_Device == "desktop":
-        first_run = not os.path.isfile(os.path.join(DIR_BASE, "description.md"))
+        first_run = not os.path.isfile(os.path.join(DIR_PAGES, "chapter_01.md"))
 
         if first_run:
             show_Message(INFO[LANGUAGE])
@@ -1651,7 +1679,7 @@ if __name__ == "__main__":
             remove_DS_Store(DIR_TEMP)
             create_Pdf(DIR_OUTPUT, DIR_BASE, DIR_PAGES, DIR_TEMP)
 
-            if not first_run and settings["type"].lower() == "book":
+            if settings["type"].lower() == "book":
                 file_Format = "epub"
                 create_Html(DIR_PAGES, DIR_TEMP, DIR_STYLES, DIR_TEMPLATES)
                 create_Css(DIR_PAGES, DIR_STYLES, DIR_TEMP)

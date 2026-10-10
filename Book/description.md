@@ -17,7 +17,7 @@ Wajsar Josef
 *
 
 # Tags
-návod, příručka, md
+návod, příručka
 
 # Identifier
 isbn: 

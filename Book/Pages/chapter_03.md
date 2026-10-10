@@ -25,8 +25,8 @@ Výsledná struktura bude vypadat takto:
     Moje kniha/
     ├── Images/
     ├── Pages/
-    ├── description.md
-    └── settings.md
+    ├── description.md (doporučený)
+    └── settings.md (volitelný)
 
 ## 3. Přidání obálky knihy
 
@@ -126,15 +126,16 @@ Soubor `settings.md` obsahuje základní nastavení knihy. Otevřete jej v texto
 **Do souboru napište:**
 
     # Format
-    A4 (popřípadě jiný formát A5, A6, ... nebo velikost v px např.: 1404x1872px)
+    A4 (A5, A6, ... nebo velikost v px např.: 1404x1872px)
+    
+    # Base font size
+    15 (základní velikost písma)
     
     # Type
     book (nebo document, který má více mozností formátování textu)
     
     # Image size
-    cover
-
-> **Pozor:** Zde zapište všechny informace.
+    cover (contain, auto)
 
 ## 7. Generování knihy
 
