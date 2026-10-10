@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Bindery</title>
+
+    <link rel="stylesheet" type="text/css" href="Styles/style_body.css" />
+    <link rel="stylesheet" type="text/css" href="Styles/style_font.css" />
+    <link rel="stylesheet" type="text/css" href="Styles/style_header.css" />
+    <link rel="stylesheet" type="text/css" href="Styles/style_content.css" />
+    <link rel="stylesheet" type="text/css" href="Styles/style_content_sidebar.css" />
+    <link rel="stylesheet" type="text/css" href="Styles/style_content_main.css" />
+    <link rel="stylesheet" type="text/css" href="Styles/style_media.css" />
+
+    <script src="JS/i18n.js" defer></script>
+    <script src="JS/script.js" defer></script>
+
+</head>
+
+<body>
+
+<!--
+ *      _  _             _                   _   _   _              
+ *     | || |___ __ _ __| |___ _ _   ___ ___| |_| |_(_)_ _  __ _ ___
+ *     | __ / -_) _` / _` / -_) '_| (_-</ -_)  _|  _| | ' \/ _` (_-<
+ *     |_||_\___\__,_\__,_\___|_|   /__/\___|\__|\__|_|_||_\__, /__/
+ *                                                         |___/    
+-->
+
+    <header>
+        <div class="container_Row">
+            <h1 data-i18n="text_Title"></h1>
+            <h2 data-i18n="text_Subtitle"></h2>
+        </div>
+        <div id="toggle_Lang" class="toggle_Language">
+            <button class="lang-option" data-lang="cs">CS</button>
+            <button class="lang-option" data-lang="en">EN</button>
+        </div>
+    </header>
+
+<!--
+ *       ___         _           _   
+ *      / __|___ _ _| |_ ___ _ _| |_ 
+ *     | (__/ _ \ ' \  _/ -_) ' \  _|
+ *      \___\___/_||_\__\___|_||_\__|
+ *                                   
+-->
+
+    <content>
+
+        <!--
+         *  ╭───────────────────╮
+         *  │      Sidebar      │
+         *  ╰───────────────────╯
+        -->
+
+        <sidebar>
+
+            <div class="panel_Book panel">
+
+                <section>
+                    <h2 data-i18n="text_Sidebar_Title_01"></h2>
+                    <p data-i18n="text_Sidebar_Description"></p>
+                </section>
+
+                <input id="input_Folder"  type="file" webkitdirectory directory multiple hidden>
+                <button id="button_Folder" data-i18n="button_Sidebar_Choose" class="button_Choose"></button>
+
+                <section class="section_Status">
+                    <h2 data-i18n="text_Sidebar_Title_02"></h2>
+                    <div class="container_Row">
+                        <div id="status_Indicator" class="status_Dot"></div>
+                        <span id="status_Text" data-i18n="text_Sidebar_Status_01"></span>
+                        <div hidden>
+                            <span data-i18n="text_Sidebar_Status_02"></span>
+                            <span data-i18n="text_Sidebar_Status_03"></span>
+                            <span data-i18n="text_Sidebar_Status_04"></span>
+                            <span data-i18n="text_Sidebar_Status_05"></span>
+                            <span data-i18n="text_Sidebar_Status_06"></span>
+                            <span data-i18n="text_Sidebar_Status_07"></span>
+                            <span data-i18n="text_Sidebar_Status_08"></span>
+                            <span data-i18n="text_Sidebar_Status_09"></span>
+                            <span data-i18n="text_Sidebar_Status_10"></span>
+                            <span data-i18n="text_Sidebar_Status_11"></span>
+                            <span data-i18n="text_Sidebar_Status_12"></span>
+                            <span data-i18n="text_Sidebar_Status_13"></span>
+                            <span data-i18n="text_Sidebar_Status_14"></span>
+                            <span data-i18n="text_Sidebar_Status_15"></span>
+                            <span data-i18n="text_Sidebar_Status_16"></span>
+                        </div>
+                    </div>
+                </section>
+
+            </div>
+
+            <div class="panel_Preview panel">
+
+                <h2 data-i18n="text_Sidebar_Title_03"></h2>
+
+                <section id="container_Cover" class="section_Cover lock_Preview">
+                    <span id="text_Placeholder_Sidebar" data-i18n="text_Sidebar_Placeholder"></span>
+                    <img id="image_Cover">
+                    <div class="container_Row">                   
+                        <span id="pages_Preview">0 / 0</span>
+                        <button id="button_Previous" disabled>‹</button>
+                        <button id="button_Next" disabled>›</button>
+                    </div>
+                </section>
+
+            </div>
+
+            <section class="section_Buttons">
+                <button id="button_Generate_Epub" data-i18n="button_Sidebar_Create_01" disabled ></button>
+                <button id="button_Generate_Pdf" data-i18n="button_Sidebar_Create_02" disabled></button>
+                <button id="button_Load_Guide" data-i18n="button_Sidebar_Download"></button>
+            </section>
+
+        </sidebar>
+
+        <!--
+         *  ╭────────────────╮
+         *  │      Main      │
+         *  ╰────────────────╯
+        -->
+
+        <main class="panel">
+
+            <section class="container_Column">
+                <h1 id="metadata_01" data-i18n="text_Main_Title_01"></h1>
+                <h2 id="metadata_02" data-i18n="text_Main_Subtitle_01"></h2>
+                <span hidden data-i18n="text_Main_Subtitle_Prefix"></span>
+                <h3 id="metadata_03" data-i18n="text_Main_Subtitle_02"></h3>
+            </section>
+
+            <section class="section_Metadata">
+                <div>
+                    <label data-i18n="text_Main_Label_01"></label>
+                    <span id="metadata_04">-</span>
+                </div>
+                <div>
+                    <label data-i18n="text_Main_Label_02"></label>
+                    <span id="metadata_05">–</span>
+                </div>
+                <div>
+                    <label data-i18n="text_Main_Label_03"></label>
+                    <span id="metadata_06" class="value_Rating">–</span>
+                </div>
+                <div>
+                    <label data-i18n="text_Main_Label_04"></label>
+                    <span id="metadata_07">–</span>
+                </div>
+                <div>
+                    <label data-i18n="text_Main_Label_05"></label>
+                    <span id="metadata_08">-</span>
+                </div>
+                <div>
+                    <label data-i18n="text_Main_Label_06"></label>
+                    <span id="metadata_09">–</span>
+                </div>
+                <div>
+                    <label data-i18n="text_Main_Label_07"></label>
+                    <span id="metadata_10">–</span>
+                </div>
+                <div>
+                    <label data-i18n="text_Main_Label_08"></label>
+                    <span id="metadata_11">–</span>
+                </div>
+            </section>
+
+            <section class="section_Description panel">
+                <h3 data-i18n="text_Main_Title_02"></h3>
+                <p id="metadata_12" data-i18n="text_Main_Placeholder"></p>
+            </section>
+
+            <section class="section_Files">
+                <h3 data-i18n="text_Main_Title_03"></h3>
+                <div id="files_Own">
+                    <div>
+                        <span>Fonts</span>
+                        <span>0</span>
+                    </div>
+                    <div>
+                        <span>Styles</span>
+                        <span>0</span>
+                    </div>
+                    <div>
+                        <span>Images</span>
+                        <span>0</span>
+                    </div>
+                    <div>
+                        <span>Templates</span>
+                        <span>0</span>
+                    </div>
+                    <div>
+                        <span>Misc</span>
+                        <span>0</span>
+                    </div>
+                    <div>
+                        <span>Text</span>
+                        <span>0</span>
+                    </div>
+                    <div>
+                        <span>Pages</span>
+                        <span>0</span>
+                    </div>
+                    <div>
+                        <span>Other</span>
+                        <span>0</span>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+
+    </content>
+
+</body>
+
+</html>

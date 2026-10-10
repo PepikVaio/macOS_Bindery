@@ -1,0 +1,219 @@
+/**
+ *       ___         _           _           ___ _    _     _              
+ *      / __|___ _ _| |_ ___ _ _| |_   ___  / __(_)__| |___| |__  __ _ _ _ 
+ *     | (__/ _ \ ' \  _/ -_) ' \  _| |___| \__ \ / _` / -_) '_ \/ _` | '_|
+ *      \___\___/_||_\__\___|_||_\__|       |___/_\__,_\___|_.__/\__,_|_|  
+ *                                                                         
+ */
+
+sidebar {
+    width: 320px;
+    min-width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--set_Gap);
+}
+
+sidebar h2 {
+    color: var(--color_Ink);
+    align-content: center;
+}
+
+sidebar p {
+    height: 70px;
+    color: var(--color_Ink_Soft);
+    align-content: center;
+}
+
+sidebar button {
+    height: 50px;
+}
+
+
+/**
+ *      ___               _   _              _   
+ *     | _ \__ _ _ _  ___| | | |__  ___  ___| |__
+ *     |  _/ _` | ' \/ -_) | | '_ \/ _ \/ _ \ / /
+ *     |_| \__,_|_||_\___|_| |_.__/\___/\___/_\_\
+ *                                               
+ */
+
+.panel_Book {
+    height: 280px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.button_Choose {
+    background-color: var(--color_Cloth);
+}
+
+.button_Choose:hover:not(:disabled) {
+    background-color: var(--color_Cloth_Dark);
+}
+
+.section_Status > div {
+    height: 30px;
+    align-items: center;
+    margin-top: 10px;
+    gap: 10px;
+}
+
+.section_Status span {
+    font-family: "Ubuntu-Medium";
+}
+
+.status_Dot {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background-color: var(--color_Ink_Faint);
+}
+
+.status_Dot.blue {
+    background-color: var(--color_Gold);
+}
+
+.status_Dot.green {
+    background-color: var(--color_Forest);
+}
+
+.status_Dot.red {
+    background-color: var(--color_Brick);
+}
+
+
+/**
+ *      ___               _                    _            
+ *     | _ \__ _ _ _  ___| |  _ __ _ _ _____ _(_)_____ __ __
+ *     |  _/ _` | ' \/ -_) | | '_ \ '_/ -_) V / / -_) V  V /
+ *     |_| \__,_|_||_\___|_| | .__/_| \___|\_/|_\___|\_/\_/ 
+ *                           |_|                            
+ */
+
+.panel_Preview {
+    height: 420px;
+    display: flex;
+    flex-direction: column;
+}
+
+.section_Cover {
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    border: 1px solid var(--color_Line);
+    border-radius: 10px;
+    margin-top: 10px;
+    background-color: var(--color_Paper_Shade);
+    position: relative;
+}
+
+.section_Cover > span {
+    font-family: "Ubuntu-Italic";
+    color: var(--color_Ink_Faint);
+    text-align: center;
+    padding: 20px;
+}
+
+.section_Cover img {
+    display: block;
+    width: auto;
+    height: 100%;
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.section_Cover > div {
+    height: 28px;
+    align-items: center;
+    justify-content: space-between;
+    position: absolute;
+    left: 8px;
+    right: 8px;
+    bottom: 8px;
+    opacity: 0.50;
+    z-index: 100;
+}
+
+.section_Cover > div > span {
+    width: 50px;
+    height: 100%;
+    font-size: 13px;
+    color: var(--color_Button_Text);
+    border-radius: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-right: auto;
+    background-color: var(--color_Ink_Faint);
+}
+
+.section_Cover div > button {
+    width: 30px;
+    height: 100%;
+    font-size: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color_Ink_Faint);
+}
+
+.section_Cover button:nth-of-type(1) {
+    border-radius: 14px 0 0 14px;
+}
+
+.section_Cover button:nth-of-type(2) {
+    border-radius: 0 14px 14px 0;
+}
+
+.section_Cover button:hover:not(:disabled) {
+    background-color: rgba(0, 0, 0, 0.55);
+}
+
+.section_Cover:hover:not(.lock_Preview) .preview_Page,
+.section_Cover:hover:not(.lock_Preview) .preview_Left,
+.section_Cover:hover:not(.lock_Preview) .preview_Right {
+    opacity: 1;
+}
+
+
+/**
+ *      ___         _   _            _         _   _               
+ *     / __| ___ __| |_(_)___ _ _   | |__ _  _| |_| |_ ___ _ _  ___
+ *     \__ \/ -_) _|  _| / _ \ ' \  | '_ \ || |  _|  _/ _ \ ' \(_-<
+ *     |___/\___\__|\__|_\___/_||_| |_.__/\_,_|\__|\__\___/_||_/__/
+ *                                                                 
+ */
+
+.section_Buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.section_Buttons button:nth-child(1) {
+    background-color: var(--color_Gold);
+}
+
+.section_Buttons button:nth-child(2) {
+    background-color: var(--color_Forest);
+}
+
+.section_Buttons button:nth-child(3) {
+    background-color: var(--color_Sky);
+}
+
+.section_Buttons button:nth-child(1):hover:not(:disabled) {
+    background-color: var(--color_Gold_Dark);
+}
+
+.section_Buttons button:nth-child(2):hover:not(:disabled) {
+    background-color: var(--color_Forest_Dark);
+}
+
+.section_Buttons button:nth-child(3):hover:not(:disabled) {
+    background-color: var(--color_Sky_Dark);
+}

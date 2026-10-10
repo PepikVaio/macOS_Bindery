@@ -1,0 +1,134 @@
+/**
+ *      ___          _             _   _   _              
+ *     | _ \___  ___| |_   ___ ___| |_| |_(_)_ _  __ _ ___
+ *     |   / _ \/ _ \  _| (_-</ -_)  _|  _| | ' \/ _` (_-<
+ *     |_|_\___/\___/\__| /__/\___|\__|\__|_|_||_\__, /__/
+ *                                               |___/    
+ */
+
+:root {
+    --color_Panel: #fdfcf9;
+
+    --color_Line: #ddd4c4;
+
+    --color_Button_Text: #fbf4f2;
+
+    --color_Paper: #f7f4ee;
+    --color_Paper_Shade: #eee8db;
+
+    --color_Ink: #211d19;
+    --color_Ink_Soft: #756c62;
+    --color_Ink_Faint: #a89e91;
+
+
+    --color_Cloth: #7c2d2d;
+    --color_Cloth_Dark: #5e2020;
+
+
+    --color_Gold: #a67c3d;
+    --color_Gold_Dark: #8f6932;
+
+    --color_Forest: #3f7052;
+    --color_Forest_Dark: #325a41;
+
+    --color_Sky: #3f6f8f;
+    --color_Sky_Dark: #345d78;
+    
+    --color_Brick: #a63b2e;
+
+    --set_Gap: 20px;
+    --set_Radius: 15px;
+}
+
+
+/**
+ *      ___          _                _   _   _              
+ *     | _ ) ___  __| |_  _   ___ ___| |_| |_(_)_ _  __ _ ___
+ *     | _ \/ _ \/ _` | || | (_-</ -_)  _|  _| | ' \/ _` (_-<
+ *     |___/\___/\__,_|\_, | /__/\___|\__|\__|_|_||_\__, /__/
+ *                     |__/                         |___/    
+ */
+
+* {
+    font-family: var(--font-serif);
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--color_Paper);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--set_Gap);
+    padding: 30px 50px;
+
+    -webkit-font-smoothing: antialiased;
+}
+
+h1 {
+	font-family: "Ubuntu-Bold";
+    font-size: 30px;
+    font-weight: 700;
+}
+
+h2 {
+	font-family: "Ubuntu-Medium";
+    height: 30px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+h3, p, span, button {
+	font-family: "Ubuntu-Regular";
+}
+
+h3 {
+    height: 20px;
+    font-size: 13px;
+    font-weight: 700;
+}
+
+p {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+span {
+    font-size: 14px;
+}
+
+button {
+    width: 100%;
+    font-size: 15px;
+    font-weight: 600;
+
+    color: var(--color_Button_Text);
+    cursor: pointer;
+
+    border: none;
+    border-radius: 10px;
+
+    transition: color 0.15s ease, transform 0.5s ease, background 0.15s ease;
+}
+
+button:disabled {
+    cursor: default;
+    pointer-events: none;
+    background-color: var(--color_Ink_Faint) !important;
+}
+
+button:active:not(:disabled) {
+    transform: scale(0.99);
+}
+
+.container_Row {
+    display: flex;
+    flex-direction: row;
+}
+
+.container_Column {
+    display: flex;
+    flex-direction: column;
+}

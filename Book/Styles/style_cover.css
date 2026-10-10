@@ -1,0 +1,56 @@
+/**
+ *      _  _             _                   _   _   _              
+ *     | || |___ __ _ __| |___ _ _   ___ ___| |_| |_(_)_ _  __ _ ___
+ *     | __ / -_) _` / _` / -_) '_| (_-</ -_)  _|  _| | ' \/ _` (_-<
+ *     |_||_\___\__,_\__,_\___|_|   /__/\___|\__|\__|_|_||_\__, /__/
+ *                                                         |___/    
+ */
+
+.cover {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cover .background {
+    background-image: url("../Images/{{FILE_COVER}}");
+    opacity: 1;
+}
+
+header {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 27px;
+}
+
+header h1,
+.header_H1 {
+	font-size: 75px;
+	margin-bottom: 0px;
+}
+
+header h2,
+.header_H2 {
+	color: #333333;
+	font-size: 40px;
+	font-family: "paragraph", "Ubuntu-Regular";
+}
+
+
+/**
+ *      ___         _                     _   _   _              
+ *     | __|__  ___| |_ ___ _ _   ___ ___| |_| |_(_)_ _  __ _ ___
+ *     | _/ _ \/ _ \  _/ -_) '_| (_-</ -_)  _|  _| | ' \/ _` (_-<
+ *     |_|\___/\___/\__\___|_|   /__/\___|\__|\__|_|_||_\__, /__/
+ *                                                      |___/    
+ */
+
+footer p,
+.footer_P {
+	color: #333333;
+	font-size: 50px;
+	margin-top: auto;
+	margin-bottom: -17px;
+}
