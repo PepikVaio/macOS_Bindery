@@ -27,6 +27,7 @@ from pypdf import PdfReader, PdfWriter
 from pypdf.xmp import XmpInformation
 from weasyprint import HTML
 
+TYPE_DEFAULT = "book"
 
 def clean_Name_File(filename):
     filename = re.sub(r'[<>:"/\\|?*]', '', filename)
@@ -61,7 +62,7 @@ def create_Cover(DIR_TEMP, preview=False):
             break
 
     if not file_Cover:
-        raise FileNotFoundError("Obálka nebyla nalezena.")
+        return None
 
     with open(file_Html, "r", encoding="utf-8") as input:
         html = input.read()
@@ -135,7 +136,7 @@ def create_Css(DIR_PAGES, DIR_STYLES, DIR_TEMP):
     replacements = {
         "PAGE_WIDTH": page_Width,
         "PAGE_HEIGHT": page_Height,
-        "FILE_COVER": os.path.basename(file_Cover),
+        "FILE_COVER": os.path.basename(file_Cover) if file_Cover else "",
         "FILE_BACKGROUND": os.path.basename(file_Background) if file_Background else "",
         "IMAGE_SIZE": settings["image_size"],
         "BASE_FONT_SIZE": f"{base_Font_Size:.4f}" + "px"
@@ -184,7 +185,7 @@ def create_Html(DIR_PAGES, DIR_TEMP, DIR_STYLES, DIR_TEMPLATES):
         "AUTHOR": book["author"],
         "PAGE_WIDTH": page_Width,
         "PAGE_HEIGHT": page_Height,
-        "FILE_COVER": os.path.basename(file_Cover),
+        "FILE_COVER": os.path.basename(file_Cover) if file_Cover else "",
         "FILE_WIDTH": f"{file_Width}",
         "FILE_HEIGHT": f"{file_Height}",
         "TYPE": settings["type"]
@@ -213,14 +214,23 @@ def create_Html(DIR_PAGES, DIR_TEMP, DIR_STYLES, DIR_TEMPLATES):
 
         return document_Html
 
-    template = load_Template("cover", DIR_TEMPLATES)
-    styles = load_Styles("cover", DIR_STYLES)
-    document_Html = replace_template_values(template, styles=styles)
     file_Html = os.path.join(DIR_TEMP, "Text", "cover.html")
 
-    print("Generuji: cover.html", flush=True)
-    with open(file_Html, "w", encoding="utf-8") as output:
-        output.write(document_Html)
+    if file_Cover or book.get("title", "").strip():
+        template = load_Template("cover", DIR_TEMPLATES)
+        styles = load_Styles("cover", DIR_STYLES)
+        document_Html = replace_template_values(template, styles=styles)
+
+        if not file_Cover:
+            document_Html = document_Html.replace("</head>", "<style>.cover .background { background-image: none !important; }</style></head>")
+
+        print("Generuji: cover.html", flush=True)
+        with open(file_Html, "w", encoding="utf-8") as output:
+            output.write(document_Html)
+
+    else:
+        if os.path.exists(file_Html):
+            os.remove(file_Html)
 
     template = load_Template("chapter", DIR_TEMPLATES)
     styles = load_Styles("chapter", DIR_STYLES)
@@ -389,20 +399,22 @@ def create_Epub(DIR_OUTPUT, DIR_BASE, DIR_TEMP):
         print("Generuji: cover...", flush=True)
 
         file_Cover = create_Cover(DIR_TEMP)
-        cover_file = os.path.basename(file_Cover)
-        cover_path = file_Cover
+        cover_file = os.path.basename(file_Cover) if file_Cover else None
 
-        print(f"Přidávám: Images/{cover_file}", flush=True)
-        epub.write(cover_path, f"OEBPS/Images/{cover_file}")
+        if cover_file:
+            cover_path = file_Cover
 
-        cover_Extension = os.path.splitext(cover_file)[1].lower()
-        cover_Media_Type = "image/png" if cover_Extension == ".png" else "image/jpeg"
+            print(f"Přidávám: Images/{cover_file}", flush=True)
+            epub.write(cover_path, f"OEBPS/Images/{cover_file}")
 
-        manifest.append(
-            f'<item id="cover-image" '
-            f'href="Images/{cover_file}" '
-            f'media-type="{cover_Media_Type}"/>'
-        )
+            cover_Extension = os.path.splitext(cover_file)[1].lower()
+            cover_Media_Type = "image/png" if cover_Extension == ".png" else "image/jpeg"
+
+            manifest.append(
+                f'<item id="cover-image" '
+                f'href="Images/{cover_file}" '
+                f'media-type="{cover_Media_Type}"/>'
+            )
 
         font_Types = {
             ".ttf": "font/ttf",
@@ -474,8 +486,10 @@ def create_Epub(DIR_OUTPUT, DIR_BASE, DIR_TEMP):
                 content = file.read()
 
             if file_Html == "cover.html":
-                content = re.sub(r'<body\b[^>]*>.*?</body>', f'<body>\n    <img src="../Images/{cover_file}" />\n</body>', content, flags=re.IGNORECASE | re.DOTALL)
+                if not cover_file:
+                    continue
 
+                content = re.sub(r'<body\b[^>]*>.*?</body>', f'<body>\n    <img src="../Images/{cover_file}" />\n</body>', content, flags=re.IGNORECASE | re.DOTALL)
             else:
                 content = re.sub(r'<img\b[^>]*>', '', content, flags=re.IGNORECASE)
                 content = re.sub(r'<p>\s*</p>', '', content, flags=re.IGNORECASE)
@@ -672,18 +686,20 @@ def create_Pdf(DIR_OUTPUT, DIR_BASE, DIR_PAGES, DIR_TEMP):
     chapters = []
 
     file_Html = os.path.join(DIR_TEMP, "Text", "cover.html")
-    pdf_data = BytesIO()
 
-    print("", flush=True)
-    print("Generuji: cover.pdf", flush=True)
-    HTML(filename=file_Html, base_url=os.path.dirname(file_Html)).write_pdf(pdf_data)
+    if os.path.isfile(file_Html):
+        pdf_data = BytesIO()
 
-    pdf_data.seek(0)
+        print("", flush=True)
+        print("Generuji: cover.pdf", flush=True)
+        HTML(filename=file_Html, base_url=os.path.dirname(file_Html)).write_pdf(pdf_data)
 
-    cover_reader = PdfReader(pdf_data)
+        pdf_data.seek(0)
 
-    for page in cover_reader.pages:
-        writer.add_page(page)
+        cover_reader = PdfReader(pdf_data)
+
+        for page in cover_reader.pages:
+            writer.add_page(page)
 
     for file, _ in pages:
         name_Html = os.path.splitext(file)[0] + ".html"
@@ -697,7 +713,6 @@ def create_Pdf(DIR_OUTPUT, DIR_BASE, DIR_PAGES, DIR_TEMP):
         pdf_data.seek(0)
 
         reader = PdfReader(pdf_data)
-
         page_offset = len(writer.pages)
 
         for page in reader.pages:
@@ -710,14 +725,7 @@ def create_Pdf(DIR_OUTPUT, DIR_BASE, DIR_PAGES, DIR_TEMP):
             with open(file_Html, "r", encoding="utf-8") as input:
                 html = input.read()
 
-            chapter_titles = list(
-                re.finditer(
-                    r"<h([1-6])>(.*?)</h\1>",
-                    html,
-                    flags=re.IGNORECASE | re.DOTALL
-                )
-            )
-
+            chapter_titles = list(re.finditer(r"<h([1-6])>(.*?)</h\1>", html, flags=re.IGNORECASE | re.DOTALL))
             pdf = pymupdf.open(stream=pdf_data.getvalue(), filetype="pdf")
 
             for chapter_title in chapter_titles:
@@ -885,7 +893,7 @@ def create_Preview(DIR_BOOK, DIR_TEMP, page=None):
 
         page_Number = 2
 
-        for file, text in load_Markdown(DIR_PAGES):
+        for file, _ in load_Markdown(DIR_PAGES):
 
             name = os.path.splitext(file)[0]
 
@@ -1080,24 +1088,31 @@ def load_Data(DIR_BASE, DIR_TEMP):
         page_Height = match.group(2) + "px"
 
     DIR_IMAGES = os.path.join(DIR_TEMP, "Images")
+    images = os.listdir(DIR_IMAGES) if os.path.isdir(DIR_IMAGES) else []
 
     file_Cover = next(
-        os.path.join(DIR_IMAGES, file)
-        for file in os.listdir(DIR_IMAGES)
-        if file.lower() in ["cover.png", "cover.jpg", "cover.jpeg"]
+        (
+            os.path.join(DIR_IMAGES, file)
+            for file in images
+            if file.lower() in ["cover.png", "cover.jpg", "cover.jpeg"]
+        ),
+        None
     )
 
     file_Background = next(
         (
             os.path.join(DIR_IMAGES, file)
-            for file in os.listdir(DIR_IMAGES)
+            for file in images
             if file.lower() in ["background.png", "background.jpg", "background.jpeg"]
         ),
         None
     )
 
-    with Image.open(file_Cover) as image:
-        file_Width, file_Height = image.size
+    if file_Cover:
+        with Image.open(file_Cover) as image:
+            file_Width, file_Height = image.size
+    else:
+        file_Width = file_Height = None
 
     return (book, page_Width, page_Height, file_Cover, file_Background, file_Width, file_Height)
 
@@ -1228,7 +1243,6 @@ def load_Metadata(directory):
         if match:
 
             if current_section is not None:
-
                 sections[current_section] = ("\n".join(current_lines).strip())
 
             current_section = (match.group(1).strip().lower())
@@ -1273,14 +1287,15 @@ def load_Metadata(directory):
 
 
 def load_Settings(DIR_BASE):
+
     settings_file = os.path.join(DIR_BASE, "settings.md")
 
     if not os.path.exists(settings_file):
         return {
             "format": "A4",
             "base_font_size": "15",
-            "type": "book",
-            "image_size": "cover"
+            "type": TYPE_DEFAULT,
+            "image_size": "contain"
         }
 
     text_Markdown = open(settings_file, "r", encoding="utf-8").read()
@@ -1294,10 +1309,8 @@ def load_Settings(DIR_BASE):
         if match:
             if current_section is not None:
                 sections[current_section] = "\n".join(current_lines).strip()
-
             current_section = match.group(1).strip().lower()
             current_lines = []
-
             continue
 
         if current_section is not None:
@@ -1309,8 +1322,8 @@ def load_Settings(DIR_BASE):
     return {
         "format": sections.get("format", "A4"),
         "base_font_size": sections.get("base font size", "15"),
-        "type": sections.get("type", "book"),
-        "image_size": sections.get("image size", "cover")
+        "type": sections.get("type", TYPE_DEFAULT),
+        "image_size": sections.get("image size", "contain")
     }
 
 
@@ -1488,7 +1501,6 @@ def show_Message(message):
         script = f'''
             Add-Type -AssemblyName System.Windows.Forms
             Add-Type -AssemblyName System.Drawing
-
             $form = New-Object System.Windows.Forms.Form
             $form.Text = "Bindery"
             $form.StartPosition = "CenterScreen"
@@ -1498,33 +1510,26 @@ def show_Message(message):
             $form.AutoSize = $true
             $form.AutoSizeMode = "GrowAndShrink"
             $form.Padding = New-Object System.Windows.Forms.Padding(25)
-
             $form.Icon = New-Object System.Drawing.Icon("{icon_path}")
-
             $label = New-Object System.Windows.Forms.Label
             $label.Text = "{message}"
             $label.AutoSize = $true
             $label.MaximumSize = New-Object System.Drawing.Size(500, 0)
             $label.Font = New-Object System.Drawing.Font("Segoe UI", 10)
             $label.Margin = New-Object System.Windows.Forms.Padding(0, 0, 0, 20)
-
             $button = New-Object System.Windows.Forms.Button
             $button.Text = "OK"
             $button.Width = 80
             $button.DialogResult = [System.Windows.Forms.DialogResult]::OK
-
             $panel = New-Object System.Windows.Forms.FlowLayoutPanel
             $panel.FlowDirection = "TopDown"
             $panel.AutoSize = $true
             $panel.WrapContents = $false
             $panel.Dock = "Fill"
-
             $panel.Controls.Add($label)
             $panel.Controls.Add($button)
-
             $form.Controls.Add($panel)
             $form.AcceptButton = $button
-
             $form.ShowDialog() | Out-Null
             $form.Dispose()
         '''
@@ -1542,14 +1547,12 @@ def show_Notification(message):
         script = f'''
             Add-Type -AssemblyName System.Windows.Forms
             Add-Type -AssemblyName System.Drawing
-
             $notify = New-Object System.Windows.Forms.NotifyIcon
             $notify.Icon = [System.Drawing.SystemIcons]::Information
             $notify.Visible = $true
             $notify.BalloonTipTitle = "Bindery"
             $notify.BalloonTipText = "{message}"
             $notify.ShowBalloonTip(5000)
-
             Start-Sleep -Seconds 5
             $notify.Dispose()
         '''
@@ -1559,9 +1562,12 @@ def show_Notification(message):
 
 def sync_Book(DIR_BASE, DIR_PAGES, type_Device):
 
+    global TYPE_DEFAULT
+
+    has_chapter_01 = os.path.isfile(os.path.join(DIR_PAGES, "chapter_01.md"))
+    TYPE_DEFAULT = "book" if has_chapter_01 else "document"
+
     def sync(book_root):
-        user_chapter_01 = os.path.join(DIR_PAGES, "chapter_01.md")
-        has_user_chapter_01 = os.path.isfile(user_chapter_01)
 
         for root, directories, files in os.walk(book_root):
 
@@ -1574,34 +1580,26 @@ def sync_Book(DIR_BASE, DIR_PAGES, type_Device):
 
             os.makedirs(user_root, exist_ok=True)
 
+
             for file in files:
-                if relative_root == "." and file.lower() in ["settings.md", "description.md"]:
+
+                if relative_root == "." and has_chapter_01 and file.lower() in ["description.md", "settings.md"]:
+                    continue
+
+                if has_chapter_01 and relative_root == "Images":
                     continue
 
                 if relative_root == "Pages":
-
                     name = os.path.splitext(file)[0].lower()
 
-                    if has_user_chapter_01 and re.match(r"chapter_\d+$", name):
+                    if has_chapter_01 and re.match(r"chapter_\d+$", name):
                         continue
 
                 source = os.path.join(root, file)
                 destination = os.path.join(user_root, file)
 
-                if relative_root == "Images" and os.path.splitext(file)[0].lower() == "cover":
-
-                    cover_exists = any(
-                        os.path.splitext(existing)[0].lower() == "cover"
-                        for existing in os.listdir(user_root)
-                    )
-
-                    if not cover_exists:
-                        shutil.copy2(source, destination)
-
-                else:
-
-                    if not os.path.exists(destination):
-                        shutil.copy2(source, destination)
+                if not os.path.exists(destination):
+                    shutil.copy2(source, destination)
 
     if type_Device == "desktop":
 
@@ -1613,7 +1611,7 @@ def sync_Book(DIR_BASE, DIR_PAGES, type_Device):
         sync(book_root)
 
     else:
-        url = "https://github.com/PepikVaio/iPad_Test/archive/refs/heads/main.zip"
+        url = "https://github.com/PepikVaio/macOS_Bindery/archive/refs/heads/main.zip"
 
         with tempfile.TemporaryDirectory() as temp_dir:
 
@@ -1628,12 +1626,15 @@ def sync_Book(DIR_BASE, DIR_PAGES, type_Device):
             with zipfile.ZipFile(zip_file, "r") as archive:
                 archive.extractall(extract_dir)
 
-            book_root = os.path.join(extract_dir, "iPad_Test-main", "Book")
+            book_root = os.path.join(extract_dir, "macOS_Bindery-main", "Book")
 
             if not os.path.isdir(book_root):
                 raise FileNotFoundError("Ve staženém GitHub archivu nebyla nalezena složka Book.")
 
             sync(book_root)
+
+    return has_chapter_01
+
 
 if __name__ == "__main__":
     # Desktop: proměnná není nastavena -> zobrazí se výběr složky.
@@ -1656,13 +1657,10 @@ if __name__ == "__main__":
     DIR_TEMPLATES = os.path.join(DIR_BASE, "Templates")
     FILE_ERROR = os.path.join(DIR_BASE, "Bindery_Error.txt")
 
-    if type_Device == "desktop":
-        first_run = not os.path.isfile(os.path.join(DIR_PAGES, "chapter_01.md"))
+    has_chapter_01 = sync_Book(DIR_BASE, DIR_PAGES, type_Device)
 
-        if first_run:
-            show_Message(INFO[LANGUAGE])
-
-    sync_Book(DIR_BASE, DIR_PAGES, type_Device)
+    if type_Device == "desktop" and not has_chapter_01:
+        show_Message(INFO[LANGUAGE])
 
     if type_Device == "desktop":
         show_Notification(TEXTS[LANGUAGE]["info_Generating"])
@@ -1673,21 +1671,19 @@ if __name__ == "__main__":
 
         if type_Device == "desktop":
             settings = load_Settings(DIR_BASE)
-            file_Format = "pdf"
             create_Html(DIR_PAGES, DIR_TEMP, DIR_STYLES, DIR_TEMPLATES)
             create_Css(DIR_PAGES, DIR_STYLES, DIR_TEMP)
             remove_DS_Store(DIR_TEMP)
             create_Pdf(DIR_OUTPUT, DIR_BASE, DIR_PAGES, DIR_TEMP)
 
             if settings["type"].lower() == "book":
-                file_Format = "epub"
                 create_Html(DIR_PAGES, DIR_TEMP, DIR_STYLES, DIR_TEMPLATES)
                 create_Css(DIR_PAGES, DIR_STYLES, DIR_TEMP)
                 create_Cover(DIR_TEMP)
                 remove_DS_Store(DIR_TEMP)
                 create_Epub(DIR_OUTPUT, DIR_BASE, DIR_TEMP)
 
-#            remove_Temp(DIR_TEMP)
+            remove_Temp(DIR_TEMP)
 
         else:
             file_Format = os.environ.get("BINDERY_FORMAT", "pdf")

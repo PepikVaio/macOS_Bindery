@@ -108,6 +108,7 @@ def get_Matadata():
     result = bindery.load_Metadata(DIR_BOOK)
     settings = bindery.load_Settings(DIR_BOOK)
 
+
     result["type"] = settings["type"]
 
     return jsonify(result)
@@ -121,6 +122,7 @@ def show_Index():
 # Delete the old book and the old temp files, then make an empty Book folder.
 @app.route("/start_upload", methods=["POST"])
 def start_Upload():
+
     for folder in (DIR_BOOK, DIR_TEMP):
         shutil.rmtree(folder, ignore_errors=True)
 

@@ -23,10 +23,10 @@ A dále 2 soubory:
 Výsledná struktura bude vypadat takto:
 
     Moje kniha/
-    ├── Images/
+    ├── Images/ (doporučené)
     ├── Pages/
-    ├── description.md (doporučený)
-    └── settings.md (volitelný)
+    ├── description.md (doporučené)
+    └── settings.md (doporučené)
 
 ## 3. Přidání obálky knihy
 
@@ -36,12 +36,14 @@ Výsledná struktura bude vypadat takto:
 
     Moje kniha/
     ├── Images/
-    │   └── cover.png
+    │   ├── background.png (volitelné)
+    │   └── cover.png (doporučené)
     ├── Pages/
     ├── description.md
     └── settings.md
 
-> **Info:** Obrázek vyberte bez popisku, Bindery jej doplní ze souboru `description.md` (viz dále).
+> **Info:** Obrázek vyberte bez popisků, Bindery jej doplní ze souboru `description.md` (viz dále).  
+> Pokud nevyberete žádný obrázek, Bindery vytvoří bílou přední stránku s popisky knihy (viz dále).
 
 > **Info:** Pokud budete chtít na každou stránku obrázek pozadí, uložte do složky `Images` soubor `background.png`, Bindery si jej načte a použije (funguje pouze v `PDF`).
 
@@ -61,7 +63,7 @@ Výsledná struktura bude vypadat takto:
 
     Moje kniha/
     ├── Images/
-    │   ├── background.png (pokud je vyžadováno)
+    │   ├── background.png
     │   └── cover.png
     ├── Pages/
     │   └── chapter_01.md
@@ -119,6 +121,8 @@ Soubor `description.md` obsahuje základní informace o knize. Otevřete jej v t
 > **Info:** Pokud některé informace nechcete zapisovat, jednoduše je nechte prázdné.  
 > Tyto informace budou uložené v metadatech knihy (některé čtečky knih je dokáží zobrazit).
 
+> **Pozor:** Pokud nevytvoříte soubor `description.md`, nebude kniha obsahovat metadata ani popisky obálky knihy.
+
 ## 6. Soubor settings.md
 
 Soubor `settings.md` obsahuje základní nastavení knihy. Otevřete jej v textovém editoru a zapište informace podle struktury, kterou Bindery používá.
@@ -126,16 +130,22 @@ Soubor `settings.md` obsahuje základní nastavení knihy. Otevřete jej v texto
 **Do souboru napište:**
 
     # Format
-    A4 (A5, A6, ... nebo velikost v px např.: 1404x1872px)
+    A4 (nebo A5, A6, ... nebo velikost v px např.: 1404x1872px)
     
     # Base font size
     15 (základní velikost písma)
     
     # Type
-    book (nebo document, který má více mozností formátování textu)
+    book (nebo document, který má více možností formátování textu)
     
     # Image size
-    cover (contain, auto)
+    contain (nebo cover)
+
+> **Info:** Pokud některé informace nechcete zapisovat, jednoduše je nechte prázdné, nebo pokud soubor vůbec nevytvoříte, Bindery samo nastaví výchozí hodnoty (`A4`, `15`, `book`, `cover`).
+
+> **Info:** Pokud vytváříte knihu, zvolte `#Type book`, dostanete vzhled knihy, tedy odsazení odstavců, jako v klasické knize. Pokud chcete vytvořit návod nebo jiný dokument, zvlote `document`, jednotlivé odstavce nejsou odsazené od kraje stránky.
+
+> **Info:** Pokud budete chtít, obrázek knihy cely viditelný, zvolte `#Image size contain`. Pokud chcete obrázek roztáhnout, aby vyplnil celý prostor stránky, zvolte `contain`.
 
 ## 7. Generování knihy
 
@@ -143,7 +153,7 @@ Po dokončení bude struktura vypadat například takto:
 
     Moje kniha/
     ├── Images/
-    │   ├── background.png (pokud je vyžadováno)
+    │   ├── background.png
     │   └── cover.png
     ├── Pages/
     │   ├── chapter_01.md

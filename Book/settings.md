@@ -8,4 +8,4 @@ A4
 document
 
 # Image size
-cover
+contain
