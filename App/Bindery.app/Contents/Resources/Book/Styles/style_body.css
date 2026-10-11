@@ -1,0 +1,129 @@
+
+/**
+ *      ___          _                _   _   _
+ *     | _ ) ___  __| |_  _   ___ ___| |_| |_(_)_ _  __ _ ___
+ *     | _ \/ _ \/ _` | || | (_-</ -_)  _|  _| | ' \/ _` (_-<
+ *     |___/\___/\__,_|\_, | /__/\___|\__|\__|_|_||_\__, /__/
+ *                     |__/                         |___/
+ */
+
+@page {
+    size: {{PAGE_WIDTH}} {{PAGE_HEIGHT}};
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: {{PAGE_WIDTH}};
+    height: {{PAGE_HEIGHT}};
+    font-size: {{BASE_FONT_SIZE}};
+    margin: 0;
+    padding: 3em;
+    box-sizing: border-box;
+}
+
+body .background {
+    width: {{PAGE_WIDTH}};
+    height: {{PAGE_HEIGHT}};
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: {{IMAGE_SIZE}};
+    z-index: -1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "header", "Ubuntu-Bold";
+}
+
+p, ol, ul, pre {
+    font-family: "paragraph", "Ubuntu-Regular";
+}
+
+em, blockquote p, .quote {
+    font-family: "italic", "Ubuntu-Italic";
+}
+
+strong {
+    font-family: "paragraph_Bold", "Ubuntu-Medium";
+}
+
+strong em {
+    font-family: "italic_Bold", "Ubuntu-MediumItalic";
+}
+
+h1 { font-size: 2.6em; }
+h2 { font-size: 1.8em; }
+h3 { font-size: 1.4em; }
+h4 { font-size: 1.2em; }
+h5 { font-size: 1.1em; }
+h6 { font-size: 1.0em; }
+
+h1, h2, h3, h4, h5, h6, p {
+    color: black;
+}
+
+p, ol, ul, blockquote {
+    font-size: 1em;
+    line-height: 1.5;
+}
+
+pre {
+    font-size: 1em;
+    line-height: 1.23;
+    display: table;
+    max-width: 100%;
+    margin-left: 1.7em;
+    padding: 0.8em 1.8em;
+    border-radius: 1em;
+    background-color: #eeeeee;
+}
+
+p code {
+    max-width: 100%;
+    padding: 0.15em 0.5em;
+    border-radius: 0.5em;
+    background-color: #eeeeee;
+}
+
+blockquote, code {
+    color: gray;
+}
+
+blockquote {
+    border-left: solid 0.2em gray;
+    margin-left: 1.7em;
+    margin-right: 1.7em;
+    padding-left: 0.65em;
+}
+
+del {
+    text-decoration: line-through;
+}
+
+table {
+    font-size: 1em;
+    font-family: "paragraph", "Ubuntu-Regular";
+    border-collapse: collapse;
+    margin: 1.5em 0;
+}
+
+table th {
+    font-size: 1.1em;
+    font-family: "paragraph_Bold", "Ubuntu-Medium";
+    padding: 0.8em 1em;
+    text-align: left;
+    background-color: #eeeeee;
+    border-bottom: 0.2em solid #555555;
+}
+
+table td {
+    padding: 0.6em 1em;
+    border-bottom: 0.1em solid #cccccc;
+}
+
+table tr:last-child td {
+    border-bottom: 0.2em solid #888888;
+}

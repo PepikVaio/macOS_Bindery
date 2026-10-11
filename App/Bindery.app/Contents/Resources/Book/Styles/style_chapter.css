@@ -1,0 +1,140 @@
+/**
+ *      ___          _                _   _   _              
+ *     | _ ) ___  __| |_  _   ___ ___| |_| |_(_)_ _  __ _ ___
+ *     | _ \/ _ \/ _` | || | (_-</ -_)  _|  _| | ' \/ _` (_-<
+ *     |___/\___/\__,_|\_, | /__/\___|\__|\__|_|_||_\__, /__/
+ *                     |__/                         |___/    
+ */
+
+.chapter {
+    box-decoration-break: clone;
+}
+
+.chapter .background {
+    background-image: url("../Images/{{FILE_BACKGROUND}}");
+    opacity: 0.5;
+}
+
+p {
+    margin-top: 1em;
+    text-align: justify;
+    clear:both;
+}
+
+.book p + p {
+    text-indent: 40px;
+}
+
+.document p + p {
+    text-indent: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+img[class^="img_Width_"]{
+    float:left;
+    padding:10px;
+}
+
+.img_Width_01{width:1%}
+.img_Width_02{width:2%}
+.img_Width_03{width:3%}
+.img_Width_04{width:4%}
+.img_Width_05{width:5%}
+.img_Width_06{width:6%}
+.img_Width_07{width:7%}
+.img_Width_08{width:8%}
+.img_Width_09{width:9%}
+.img_Width_10{width:10%}
+.img_Width_11{width:11%}
+.img_Width_12{width:12%}
+.img_Width_13{width:13%}
+.img_Width_14{width:14%}
+.img_Width_15{width:15%}
+.img_Width_16{width:16%}
+.img_Width_17{width:17%}
+.img_Width_18{width:18%}
+.img_Width_19{width:19%}
+.img_Width_20{width:20%}
+.img_Width_21{width:21%}
+.img_Width_22{width:22%}
+.img_Width_23{width:23%}
+.img_Width_24{width:24%}
+.img_Width_25{width:25%}
+.img_Width_26{width:26%}
+.img_Width_27{width:27%}
+.img_Width_28{width:28%}
+.img_Width_29{width:29%}
+.img_Width_30{width:30%}
+.img_Width_31{width:31%}
+.img_Width_32{width:32%}
+.img_Width_33{width:33%}
+.img_Width_34{width:34%}
+.img_Width_35{width:35%}
+.img_Width_36{width:36%}
+.img_Width_37{width:37%}
+.img_Width_38{width:38%}
+.img_Width_39{width:39%}
+.img_Width_40{width:40%}
+.img_Width_41{width:41%}
+.img_Width_42{width:42%}
+.img_Width_43{width:43%}
+.img_Width_44{width:44%}
+.img_Width_45{width:45%}
+.img_Width_46{width:46%}
+.img_Width_47{width:47%}
+.img_Width_48{width:48%}
+.img_Width_49{width:49%}
+.img_Width_50{width:50%}
+.img_Width_51{width:51%}
+.img_Width_52{width:52%}
+.img_Width_53{width:53%}
+.img_Width_54{width:54%}
+.img_Width_55{width:55%}
+.img_Width_56{width:56%}
+.img_Width_57{width:57%}
+.img_Width_58{width:58%}
+.img_Width_59{width:59%}
+.img_Width_60{width:60%}
+.img_Width_61{width:61%}
+.img_Width_62{width:62%}
+.img_Width_63{width:63%}
+.img_Width_64{width:64%}
+.img_Width_65{width:65%}
+.img_Width_66{width:66%}
+.img_Width_67{width:67%}
+.img_Width_68{width:68%}
+.img_Width_69{width:69%}
+.img_Width_70{width:70%}
+.img_Width_71{width:71%}
+.img_Width_72{width:72%}
+.img_Width_73{width:73%}
+.img_Width_74{width:74%}
+.img_Width_75{width:75%}
+.img_Width_76{width:76%}
+.img_Width_77{width:77%}
+.img_Width_78{width:78%}
+.img_Width_79{width:79%}
+.img_Width_80{width:80%}
+.img_Width_81{width:81%}
+.img_Width_82{width:82%}
+.img_Width_83{width:83%}
+.img_Width_84{width:84%}
+.img_Width_85{width:85%}
+.img_Width_86{width:86%}
+.img_Width_87{width:87%}
+.img_Width_88{width:88%}
+.img_Width_89{width:89%}
+.img_Width_90{width:90%}
+.img_Width_91{width:91%}
+.img_Width_92{width:92%}
+.img_Width_93{width:93%}
+.img_Width_94{width:94%}
+.img_Width_95{width:95%}
+.img_Width_96{width:96%}
+.img_Width_97{width:97%}
+.img_Width_98{width:98%}
+.img_Width_99{width:99%}
