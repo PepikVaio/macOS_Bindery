@@ -290,7 +290,6 @@ async function load_Book(files = null) {
         set_Status("text_Sidebar_Status_06", "green");
 
         button_Generate_PdfButton.disabled = false;
-//        button_Generate_EpubButton.disabled = false;
         button_Generate_EpubButton.disabled = type_Book !== "book";
 
     } catch (error) {
@@ -511,12 +510,8 @@ function show_Pages_Preview(index) {
 function toogle_Controls_Disabled(disabled) {
 
     button_Folder.disabled = disabled;
-//    button_Generate_EpubButton.disabled = disabled;
-//    button_Generate_PdfButton.disabled = disabled;
-
     button_Generate_EpubButton.disabled = disabled || type_Book !== "book";
     button_Generate_PdfButton.disabled = disabled || !upload_Finished;
-
     button_Load_Guide.disabled = disabled;
     button_Next.disabled = disabled;
     button_Previous.disabled = disabled;
