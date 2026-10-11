@@ -913,7 +913,7 @@ def create_Preview(DIR_BOOK, DIR_TEMP, page=None):
 
             for pdf_Page in document:
 
-                if page_Number >= 7:
+                if page_Number >= 11:
                     break
 
                 pixmap = pdf_Page.get_pixmap(matrix=pymupdf.Matrix(1.5, 1.5), alpha=False)
@@ -926,7 +926,7 @@ def create_Preview(DIR_BOOK, DIR_TEMP, page=None):
             document.close()
             os.remove(pdf_File)
 
-            if page_Number >= 7:
+            if page_Number >= 11:
                 break
 
         pages = []
