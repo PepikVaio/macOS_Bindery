@@ -42,10 +42,10 @@ Výsledná struktura bude vypadat takto:
     ├── description.md
     └── settings.md
 
-> **Info:** Obrázek vyberte bez popisků, Bindery jej doplní ze souboru `description.md` (viz dále).  
+> **Pozor:** Obrázek vyberte bez popisků, Bindery jej doplní ze souboru `description.md` (viz dále).  
 > Pokud nevyberete žádný obrázek, Bindery vytvoří bílou přední stránku s popisky knihy (viz dále).
 
-> **Info:** Pokud budete chtít na každou stránku obrázek pozadí, uložte do složky `Images` soubor `background.png`, Bindery si jej načte a použije (funguje pouze v `PDF`).
+> **Tip:** Pokud budete chtít na každou stránku obrázek pozadí, uložte do složky `Images` soubor `background.png`, Bindery si jej načte a použije (funguje pouze v `PDF`).
 
 ## 4. Vytvoření první stránky
 
@@ -70,7 +70,7 @@ Výsledná struktura bude vypadat takto:
     ├── description.md
     └── settings.md
 
-> **Tip:** Každý soubor představuje jednu kapitolu knihy.
+> **Info:** Každý soubor představuje jednu kapitolu knihy.
 
 > **Tip - Jak psát text:**  
 > Bindery používá `Markdown`, který umožňuje jednoduchým způsobem zapsat například nadpisy, tučné písmo, kurzívu nebo seznamy (více v části `Syntaxe Markdownu`).
@@ -121,7 +121,7 @@ Soubor `description.md` obsahuje základní informace o knize. Otevřete jej v t
 > **Info:** Pokud některé informace nechcete zapisovat, jednoduše je nechte prázdné.  
 > Tyto informace budou uložené v metadatech knihy (některé čtečky knih je dokáží zobrazit).
 
-> **Pozor:** Pokud nevytvoříte soubor `description.md`, nebude kniha obsahovat metadata ani popisky obálky knihy.
+> **Varování:** Pokud nevytvoříte soubor `description.md`, nebude kniha obsahovat metadata ani popisky obálky knihy.
 
 ## 6. Soubor settings.md
 
@@ -133,19 +133,24 @@ Soubor `settings.md` obsahuje základní nastavení knihy. Otevřete jej v texto
     A4 (nebo A5, A6, ... nebo velikost v px např.: 1404x1872px)
     
     # Base font size
-    15 (základní velikost písma)
+    18 (základní velikost písma)
     
     # Type
-    book (nebo document, který má více možností formátování textu)
+    book (nebo document, který má více možností formátování textu a barev)
     
     # Image size
     contain (nebo cover)
+    
+    # Color mode
+    monochrome (nebo color - pouze pro document)
 
-> **Info:** Pokud některé informace nechcete zapisovat, jednoduše je nechte prázdné, nebo pokud soubor vůbec nevytvoříte, Bindery samo nastaví výchozí hodnoty (`A4`, `15`, `book`, `cover`).
+> **Info:** Pokud některé informace nechcete zapisovat, jednoduše je nechte prázdné, nebo pokud soubor vůbec nevytvoříte, Bindery samo nastaví výchozí hodnoty (`A4`, `18`, `book`, `cover`, `monochrome`).
 
-> **Info:** Pokud vytváříte knihu, zvolte `#Type book`, dostanete vzhled knihy, tedy odsazení odstavců, jako v klasické knize. Pokud chcete vytvořit návod nebo jiný dokument, zvlote `document`, jednotlivé odstavce nejsou odsazené od kraje stránky.
+> **Tip:** Pokud vytváříte knihu, zvolte `#Type book`, dostanete vzhled knihy, tedy odsazení odstavců, jako v klasické knize. Pokud chcete vytvořit návod nebo jiný dokument, zvlote `document`, jednotlivé odstavce nejsou odsazené od kraje stránky.
 
-> **Info:** Pokud budete chtít, obrázek knihy cely viditelný, zvolte `#Image size contain`. Pokud chcete obrázek roztáhnout, aby vyplnil celý prostor stránky, zvolte `contain`.
+> **Tip:** Pokud budete chtít, obrázek knihy cely viditelný, zvolte `#Image size contain`. Pokud chcete obrázek roztáhnout, aby vyplnil celý prostor stránky, zvolte `contain`.
+
+> **Důležité:** `#Color mode color` je dostupné pouze pro `#Type document`, pro `#Type book` je dostupný pouze režim `monochrome`. I když nastavíte `color`, Bindery sám převede na `monochrome`.
 
 ## 7. Generování knihy
 

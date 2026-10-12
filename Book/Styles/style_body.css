@@ -73,30 +73,54 @@ p, ol, ul, blockquote {
 pre {
     font-size: 1em;
     line-height: 1.23;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-break: break-word;
     display: table;
     max-width: 100%;
     margin-left: 1.7em;
     padding: 0.8em 1.8em;
     border-radius: 1em;
-    background-color: #eeeeee;
+    border: 0.1em solid black;
+    background-color: {{COLOR_BLOCK_BOX}};
 }
 
 p code {
     max-width: 100%;
     padding: 0.15em 0.5em;
     border-radius: 0.5em;
-    background-color: #eeeeee;
+    background-color: {{COLOR_BLOCK_PARAGRAPH}};
 }
 
 blockquote, code {
-    color: gray;
+    color: {{COLOR_BLOCK_TEXT}};
 }
 
 blockquote {
     border-left: solid 0.2em gray;
     margin-left: 1.7em;
-    margin-right: 1.7em;
+    margin-right: 0em;
     padding-left: 0.65em;
+}
+
+blockquote.note {
+    border-left-color: {{COLOR_NOTE}};
+}
+
+blockquote.tip {
+    border-left-color: {{COLOR_TIP}};
+}
+
+blockquote.important {
+    border-left-color: {{COLOR_IMPORTANT}};
+}
+
+blockquote.warning {
+    border-left-color: {{COLOR_WARNING}};
+}
+
+blockquote.caution {
+    border-left-color: {{COLOR_CAUTION}};
 }
 
 del {
@@ -115,7 +139,7 @@ table th {
     font-family: "paragraph_Bold", "Ubuntu-Medium";
     padding: 0.8em 1em;
     text-align: left;
-    background-color: #eeeeee;
+    background-color: {{COLOR_BLOCK_BOX}};
     border-bottom: 0.2em solid #555555;
 }
 
@@ -125,5 +149,5 @@ table td {
 }
 
 table tr:last-child td {
-    border-bottom: 0.2em solid #888888;
+    border-bottom: 0.2em solid #555555;
 }

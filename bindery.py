@@ -102,7 +102,7 @@ def create_Cover(DIR_TEMP, preview=False):
     return file_Cover
 
 
-def create_Css(DIR_PAGES, DIR_STYLES, DIR_TEMP):
+def create_Css(DIR_PAGES, DIR_STYLES, DIR_TEMP, format):
     print("", flush=True)
     print("CSS", flush=True)
     print("────────────────────────────────────", flush=True)
@@ -159,6 +159,37 @@ def create_Css(DIR_PAGES, DIR_STYLES, DIR_TEMP):
             style = input.read()
 
         for key, value in replacements.items():
+            style = style.replace(f"{{{{{key}}}}}", value)
+
+
+
+
+        if format == "pdf" and settings["type"].lower() == "document" and settings["color_mode"].lower() == "color":
+            colors = {
+                "COLOR_BLOCK_BOX": "#BFBFBF",
+                "COLOR_BLOCK_PARAGRAPH": "#FFFF99",
+                "COLOR_BLOCK_TEXT": "black",
+
+                "COLOR_NOTE": "blue",
+                "COLOR_TIP": "green",
+                "COLOR_IMPORTANT": "violet",
+                "COLOR_WARNING": "orange",
+                "COLOR_CAUTION": "red"
+            }
+        else:
+            colors = {
+                "COLOR_BLOCK_BOX": "#BFBFBF",
+                "COLOR_BLOCK_PARAGRAPH": "#BFBFBF",
+                "COLOR_BLOCK_TEXT": "black",
+                
+                "COLOR_NOTE": "black",
+                "COLOR_TIP": "black",
+                "COLOR_IMPORTANT": "black",
+                "COLOR_WARNING": "black",
+                "COLOR_CAUTION": "black"
+            }
+
+        for key, value in colors.items():
             style = style.replace(f"{{{{{key}}}}}", value)
 
         with open(destination, "w", encoding="utf-8") as output:
@@ -242,7 +273,7 @@ def create_Html(DIR_PAGES, DIR_TEMP, DIR_STYLES, DIR_TEMPLATES):
             code_blocks.append(match.group(0))
             return f"@@CODE_BLOCK_{len(code_blocks) - 1}@@"
 
-        text_Markdown = re.sub(r'(?m)^(?:    (?![-*+]\s|\d+\.\s).*(?:\n|$))+', save_code_block, text_Markdown)
+        text_Markdown = re.sub(r'(?m)^(?: {4,}(?![-*+]\s|\d+\.\s).*(?:\n|$))+', save_code_block, text_Markdown)
         text_Markdown = re.sub(r'```[\s\S]*?```', save_code_block, text_Markdown)
 
         inline_codes = []
@@ -286,10 +317,48 @@ def create_Html(DIR_PAGES, DIR_TEMP, DIR_STYLES, DIR_TEMPLATES):
         text_Markdown = "\n".join(new_lines)
 
         content = markdown.markdown(text_Markdown, extensions=["extra", "tables", "fenced_code", "sane_lists"])
+
+        callout_colors = {
+            "note": "note",
+            "info": "note",
+            "tip": "tip",
+            "important": "important",
+            "warning": "warning",
+            "caution": "caution",
+
+            "poznámka": "note",
+            "informace": "note",
+            "důležité": "important",
+            "varování": "warning",
+            "pozor": "caution"
+        }
+
+        def format_callout(match):
+            callout_name = match.group(1)
+            callout_type = callout_colors[callout_name.lower()]
+            title = match.group(2) or ""
+            text = match.group(3)
+
+            heading = f"{callout_name} - {title}" if title else callout_name
+
+            return f'<blockquote class="quote {callout_type}"><p><strong>{heading}:</strong> {text}</p></blockquote>'
+
+        callout_pattern = "|".join(
+            re.escape(name)
+            for name in sorted(callout_colors, key=len, reverse=True)
+        )
+
+        content = re.sub(
+            rf'<blockquote>\s*<p>\s*<strong>({callout_pattern})(?:\s*-\s*(.*?))?:\s*</strong>\s*(.*?)</p>\s*</blockquote>',
+            format_callout,
+            content,
+            flags=re.IGNORECASE | re.DOTALL
+        )
+
         content = re.sub(r'<br\s*/?>', '<br />', content, flags=re.IGNORECASE)
         content = content.replace("<!-- LIST_BREAK -->", "")
         content = content.replace("<!-- QUOTE_BREAK -->", "")
-        content = re.sub(r'(?<![=\w])"([^"\n]+)"', r'<span class="quote">"\1"</span>', content)
+        content = re.sub(r'(?<![=\w])"([^"\n]+)"', r'<em>"\1"</em>', content)
 
         for index, image in enumerate(images):
             alt, width, source = image
@@ -320,6 +389,16 @@ def create_Html(DIR_PAGES, DIR_TEMP, DIR_STYLES, DIR_TEMPLATES):
             code_html = f'<pre><code>{html.escape(code_content)}</code></pre>'
             content = content.replace(f'<p>@@CODE_BLOCK_{index}@@</p>', code_html)
             content = content.replace(f'@@CODE_BLOCK_{index}@@', code_html)
+
+        content = re.sub(
+            r'<p>\s*(<pre><code>[\s\S]*?</code></pre>)\s*(.*?)</p>',
+            lambda match: match.group(1) + (
+                f'\n<p>{match.group(2).strip()}</p>'
+                if match.group(2).strip()
+                else ""
+            ),
+            content
+        )
 
         content = content.replace("<p></p>", "")
         content = content.replace("\n</code></pre>", "</code></pre>")
@@ -469,8 +548,8 @@ def create_Epub(DIR_OUTPUT, DIR_BASE, DIR_TEMP):
             with open(source, "r", encoding="utf-8") as file_css:
                 content_css = file_css.read()
 
-            content_css = re.sub(r'((?:p|li|blockquote|h[1-6])\s*\{[^}]*?)font-size\s*:[^;]+;?', r'\1', content_css, flags=re.IGNORECASE | re.DOTALL)
-            
+            content_css = re.sub(r'(?i)\bfont-size\s*:\s*[^;{}]+;?', lambda m: f'/* {m.group(0)} */', content_css)
+
             epub.writestr(path_Epub, content_css)
             manifest.append(
                 f'<item id="style_{len(manifest)}" '
@@ -884,7 +963,7 @@ def create_Preview(DIR_BOOK, DIR_TEMP, page=None):
 
         copy_Files(DIR_BOOK, DIR_TEMP)
         create_Html(DIR_PAGES, DIR_TEMP, DIR_STYLES, DIR_TEMPLATES)
-        create_Css(DIR_PAGES, DIR_STYLES, DIR_TEMP)
+        create_Css(DIR_PAGES, DIR_STYLES, DIR_TEMP, "pdf")
         create_Cover(DIR_TEMP, preview=True)
 
         preview_Dir = os.path.join(DIR_TEMP, "Preview")
@@ -1286,45 +1365,57 @@ def load_Metadata(directory):
     }
 
 
+
 def load_Settings(DIR_BASE):
 
     settings_file = os.path.join(DIR_BASE, "settings.md")
 
     if not os.path.exists(settings_file):
-        return {
+        settings = {
             "format": "A4",
-            "base_font_size": "15",
+            "base_font_size": "18",
             "type": TYPE_DEFAULT,
-            "image_size": "contain"
+            "image_size": "contain",
+            "color_mode": "monochrome"
         }
 
-    text_Markdown = open(settings_file, "r", encoding="utf-8").read()
-    sections = {}
-    current_section = None
-    current_lines = []
+    else:
+        text_Markdown = open(settings_file, "r", encoding="utf-8").read()
+        sections = {}
+        current_section = None
+        current_lines = []
 
-    for line in text_Markdown.splitlines():
-        match = re.match(r"^#\s+(.+?)\s*$", line)
+        for line in text_Markdown.splitlines():
+            match = re.match(r"^#\s+(.+?)\s*$", line)
 
-        if match:
+            if match:
+                if current_section is not None:
+                    sections[current_section] = "\n".join(current_lines).strip()
+
+                current_section = match.group(1).strip().lower()
+                current_lines = []
+                continue
+
             if current_section is not None:
-                sections[current_section] = "\n".join(current_lines).strip()
-            current_section = match.group(1).strip().lower()
-            current_lines = []
-            continue
+                current_lines.append(line)
 
         if current_section is not None:
-            current_lines.append(line)
+            sections[current_section] = "\n".join(current_lines).strip()
 
-    if current_section is not None:
-        sections[current_section] = "\n".join(current_lines).strip()
+        settings = {
+            "format": sections.get("format", "A4"),
+            "base_font_size": sections.get("base font size", "18"),
+            "type": sections.get("type", TYPE_DEFAULT),
+            "image_size": sections.get("image size", "contain"),
+            "color_mode": sections.get("color mode", "monochrome").lower()
+        }
 
-    return {
-        "format": sections.get("format", "A4"),
-        "base_font_size": sections.get("base font size", "15"),
-        "type": sections.get("type", TYPE_DEFAULT),
-        "image_size": sections.get("image size", "contain")
-    }
+    if settings["type"].strip().lower() == "book":
+        settings["color_mode"] = "monochrome"
+    elif settings["color_mode"] not in ["color", "monochrome"]:
+        settings["color_mode"] = "monochrome"
+
+    return settings
 
 
 def load_Styles(document_name, DIR_STYLES):
@@ -1671,32 +1762,32 @@ if __name__ == "__main__":
 
         if type_Device == "desktop":
             settings = load_Settings(DIR_BASE)
+
             create_Html(DIR_PAGES, DIR_TEMP, DIR_STYLES, DIR_TEMPLATES)
-            create_Css(DIR_PAGES, DIR_STYLES, DIR_TEMP)
+            create_Css(DIR_PAGES, DIR_STYLES, DIR_TEMP, "pdf")
             remove_DS_Store(DIR_TEMP)
+
             create_Pdf(DIR_OUTPUT, DIR_BASE, DIR_PAGES, DIR_TEMP)
 
             if settings["type"].lower() == "book":
-                create_Html(DIR_PAGES, DIR_TEMP, DIR_STYLES, DIR_TEMPLATES)
-                create_Css(DIR_PAGES, DIR_STYLES, DIR_TEMP)
+                create_Css(DIR_PAGES, DIR_STYLES, DIR_TEMP, "epub")
                 create_Cover(DIR_TEMP)
-                remove_DS_Store(DIR_TEMP)
                 create_Epub(DIR_OUTPUT, DIR_BASE, DIR_TEMP)
 
-            remove_Temp(DIR_TEMP)
+#            remove_Temp(DIR_TEMP)
 
         else:
             file_Format = os.environ.get("BINDERY_FORMAT", "pdf")
             
             create_Html(DIR_PAGES, DIR_TEMP, DIR_STYLES, DIR_TEMPLATES)
-            create_Css(DIR_PAGES, DIR_STYLES, DIR_TEMP)
+            create_Css(DIR_PAGES, DIR_STYLES, DIR_TEMP, file_Format)
+            remove_DS_Store(DIR_TEMP)
 
             if file_Format == "pdf":
-                remove_DS_Store(DIR_TEMP)
                 create_Pdf(DIR_OUTPUT, DIR_BASE, DIR_PAGES, DIR_TEMP)
             else:
+                create_Css(DIR_PAGES, DIR_STYLES, DIR_TEMP, file_Format)
                 create_Cover(DIR_TEMP)
-                remove_DS_Store(DIR_TEMP)
                 create_Epub(DIR_OUTPUT, DIR_BASE, DIR_TEMP)
 
         if type_Device == "desktop":

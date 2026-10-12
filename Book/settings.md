@@ -2,10 +2,13 @@
 A4
 
 # Base font size
-15
+18
 
 # Type
 document
 
 # Image size
 contain
+
+# Color mode
+color

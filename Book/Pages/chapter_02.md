@@ -43,13 +43,13 @@ Pro první jednoduchou knihu stačí čtyři základní části:
 
 Další možnosti Bindery lze přidávat postupně podle toho, co od výsledné knihy potřebujete.
 
-> **Info - Složky a soubory jsou pojmenované dle využití:**  
+> **Info:** Všechny ostatní potřebné části si také Bondery vytvořit sama.
+
+> **Pozor - Složky a soubory jsou pojmenované dle využití:**  
 > `Images` obsahuje obrázky používané v knize.  
 > `Pages` obsahuje texty knihy.  
 > `description.md` obsahuje popisky ke knize.  
 > `settings.md` obsahuje nastavení knihy.
-
-> **Info:** Všechny ostatní potřebné části si také Bondery vytvořit sama.
 
 ---
 

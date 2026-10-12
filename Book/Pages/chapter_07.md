@@ -3,7 +3,7 @@
 
 ---
 
-![Bindery|25%](../Images/cover.png)
+![Bindery|30%](../Images/cover.png)
 <br>
 Nástroj pro tvorbu vlastních knih z textových souborů Markdown. Umožňuje připravit obsah knihy a převést jej do výsledné podoby pro digitální i tiskové publikování.
 <br><br>

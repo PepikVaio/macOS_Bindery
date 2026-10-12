@@ -41,7 +41,7 @@ Výsledná struktura bude vypadat takto:
     ├── description.md
     └── settings.md
 
-> **Info - Fonty jsou pojmenované dle použití:**  
+> **Pozor - Fonty jsou pojmenované dle použití:**  
 > `header.ttf` pro nadpisy.  
 > `paragraph.ttf` pro texty.  
 > `italic` pro kurzívu.  
@@ -49,7 +49,7 @@ Výsledná struktura bude vypadat takto:
 
 > **Tip:** Nemusíte stahovat všechny fonty, stačí pouze ty, které potřebujete.
 
-> **Pozor:** Pokud budete stahovat dostupné fonty z internetu a knihu publikovat za peníze, vždy si přečtěte licenci.
+> **Varování:** Pokud budete stahovat dostupné fonty z internetu a knihu publikovat za peníze, vždy si přečtěte licenci.
 
 ## CSS
 
@@ -87,6 +87,6 @@ Struktura bude vypadat takto:
 
 Následně můžete tyto soubory otevřít a upravit tak jak potřebujete. Veškeré informace o úpravě `CSS` souborů se dozvíte na internetu. Úprava stylů přesahuje rozsah této příručky a není možné pokrýt veškeré možnosti, které `CSS` nabízí.
 
-> **Tip - Níže je seznam stránek, které vám s úpravou `CSS` pomůžou:**  
+> **Info - Níže je seznam stránek, které vám s úpravou `CSS` pomůžou:**  
 > [CSS: Cascading Style Sheets - MDN Web Docs](https://developer.mozilla.org/en-US/docs/Web/CSS)  
 > [A Complete CSS Flexbox Layout Guide](https://css-tricks.com/snippets/css/a-guide-to-flexbox/)  
