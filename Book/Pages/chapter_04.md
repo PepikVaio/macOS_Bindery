@@ -16,7 +16,7 @@ Tento návod ukazuje přesný zápis v `Markdownu` a na konci, jak bude text vyp
 
 ## Type book
 
-#### 1. Nadpisy
+### 1. Nadpisy
 
 Počet znaků `#` na začátku řádku určuje úroveň nadpisu. Za `#` vždy napište mezeru.
 
@@ -28,7 +28,7 @@ Počet znaků `#` na začátku řádku určuje úroveň nadpisu. Za `#` vždy na
 
 > **Tip:** Používejte jeden nadpis první úrovně na dokument a dál se držte logické hierarchie.  
 
-#### 2. Odstavce a zalomení řádku
+### 2. Odstavce a zalomení řádku
 
 **Text** se píše bez speciální syntaxe. Odstavce se oddělují **prázdným řádkem**.
 
@@ -44,7 +44,7 @@ Chcete-li zalomit řádek **bez** založení nového odstavce, ukončete předch
 
 > **Info:** Znak `·` zde znázorňuje mezeru. Do dokumentu napište skutečné mezery.
 
-#### 3. Formátování textu
+### 3. Formátování textu
 
 Markdown umožňuje jednoduché formátování textu. Můžete zapsat tučný text, kurzívu, tučnou kurzívu nebo přeškrtnutý text.
 
@@ -53,13 +53,13 @@ Markdown umožňuje jednoduché formátování textu. Můžete zapsat tučný te
     ***tučná kurzíva***
     ~~přeškrtnuto~~
 
-#### 4. Citace
+### 4. Citace
 
 Můžete použít klasické uvozovky v textu.
 
     "Text v uvozovkách"
 
-#### 5. Odkazy
+### 5. Odkazy
 
 Text odkazu dejte do hranatých závorek a adresu do kulatých závorek. Kliknutím na `Text odkazu` se otevře uvedená internetová adresa.
 
@@ -73,11 +73,11 @@ Text odkazu dejte do hranatých závorek a adresu do kulatých závorek. Kliknut
 
 Stejné možnosti jako `#Type book` a k tomu přidává následující:
 
-#### 1. Nadpisy
+### 1. Nadpisy
 
     ###### Nadpis šesté úrovně (nejmenší)
 
-#### 2. Citace
+### 2. Citace
 
 Řádek uvozený znakem `>` se zobrazí jako citace.
 
@@ -93,17 +93,17 @@ Stejné možnosti jako `#Type book` a k tomu přidává následující:
     **Varování:** vlastní text
     **Pozor:** vlastní text
 
-#### 3. Kód
+### 3. Kód
 
 Kód můžete vložit přímo do věty nebo jako samostatný blok.
 
-##### Kód uvnitř věty
+#### Kód uvnitř věty
 
 Text ohraničte jedním zpětným apostrofem (`` ` ``).
 
     Příkaz `git status` zobrazí stav repozitáře.
 
-##### Blok kódu
+#### Blok kódu
 
 Blok ohraničte třemi zpětnými apostrofy na samostatných řádcích nebo **čtyřmi mezerami** a nebo tabulátorem.
 
@@ -117,9 +117,9 @@ Blok ohraničte třemi zpětnými apostrofy na samostatných řádcích nebo **�
 
 > **Pozor:** Uvozovky `"takto"` v běžném textu nepotřebují žádnou speciální syntaxi. Kód (zpětné apostrofy) používejte jen pro skutečný kód nebo přesné texty.
 
-#### 4. Seznamy
+### 4. Seznamy
 
-##### Odrážkový seznam
+#### Odrážkový seznam
 
 Použijte pomlčku, hvězdičku nebo plus, vždy s mezerou za znakem.
 
@@ -135,13 +135,13 @@ Použijte pomlčku, hvězdičku nebo plus, vždy s mezerou za znakem.
     + Druhá položka seznamu
     + ...
 
-##### Číslovaný seznam
+#### Číslovaný seznam
 
     1. První číslovaná položka seznamu
     2. Druhá číslovaná položka seznamu
     3. ...
 
-##### Vnořený seznam
+#### Vnořený seznam
 
 Podpoložku odsaďte o **4 mezery** nebo jeden tabulátor.
 
@@ -153,15 +153,15 @@ Podpoložku odsaďte o **4 mezery** nebo jeden tabulátor.
 
 > **Info:** Znak `·` zde znázorňuje mezeru. Do dokumentu napište skutečné mezery.
 
-#### 5. Obrázky
+### 5. Obrázky
 
 Zápis je podobný odkazu, jen začíná vykřičníkem. Text v hranatých závorkách je **alternativní popis** obrázku. Zobrazí se, když se obrázek nenačte, a čtou ho odečítače obrazovky.
 
-##### Obrázek bez určení velikosti
+#### Obrázek bez určení velikosti
 
     ![Název obrázku](../Images/image.png)
 
-##### Obrázek s určenou šířkou
+#### Obrázek s určenou šířkou
 
 Bindery rozšiřuje standardní Markdown o možnost nastavit šířku obrázku v procentech. Za alternativní popis přidejte svislítko `|` a požadovanou šířku v procentech.
 
@@ -176,7 +176,7 @@ Bindery rozšiřuje standardní Markdown o možnost nastavit šířku obrázku v
 
 > **Tip:** Pokud budete chtít stejný obrázek použít také uvnitř dokumentu, vložte do složky `Images` druhý obrázek s jiným názvem.
 
-#### 6. Tabulky
+### 6. Tabulky
 
 Sloupce oddělte svislítkem `|`. Druhý řádek (z pomlček) odděluje záhlaví od obsahu.
 
@@ -193,13 +193,13 @@ Sloupce oddělte svislítkem `|`. Druhý řádek (z pomlček) odděluje záhlav�
 
 > **Tip:** Svislítka nemusí být pod sebou. Zarovnání je jen pro vaše pohodlí při psaní.
 
-#### 7. Oddělovač
+### 7. Oddělovač
 
 Tři pomlčky na samostatném řádku vytvoří vodorovnou čáru.
 
     ---
 
-#### 8. Speciální znaky
+### 8. Speciální znaky
 
 Pokud chcete, aby se znak, který má v Markdownu zvláštní význam, zobrazil doslova, napište před něj zpětné lomítko `\`.
 
@@ -209,7 +209,7 @@ Pokud chcete, aby se znak, který má v Markdownu zvláštní význam, zobrazil 
 
 Takto lze vypsat například: `\`, `*`, `_`, `#`, `[`, `]`, `` ` ``, `>`
 
-#### 9. Tip
+### 9. Tip
 
 Pro studijní účely můžete také využít tohoto průvodce, který najdete na stránce projektu [Github](https://github.com/PepikVaio/macOS_Bindery)
 
