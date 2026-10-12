@@ -14,7 +14,7 @@ Tento návod ukazuje přesný zápis v `Markdownu` a na konci, jak bude text vyp
 
 ---
 
-## #Type book
+## Type book
 
 #### 1. Nadpisy
 
@@ -69,7 +69,7 @@ Text odkazu dejte do hranatých závorek a adresu do kulatých závorek. Kliknut
 
 ---
 
-## #Type document
+## Type document
 
 Stejné možnosti jako `#Type book` a k tomu přidává následující:
 
